@@ -1,0 +1,12 @@
+---
+
+fuel_pubkey_urls:
+  - "https://github.com/yourusername.keys"
+  - "https://github.com/anotherusername.keys"
+
+fuel_shared_files: ['.env']
+fuel_shared_dirs: ['web/app/uploads', 'web/app/cache']
+
+ansistrano_git_repo: 'git@git.example.com:xxx/xxx.git'
+ansistrano_git_branch: 'master'
+ansistrano_shared_paths: ['web/app/uploads', 'web/app/cache', '.env']

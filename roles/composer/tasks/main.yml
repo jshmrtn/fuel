@@ -1,0 +1,24 @@
+---
+
+- name: FUEL | Install Composer
+  get_url:
+    url="{{ fuel_composer_source_url }}"
+    dest="{{ fuel_composer_dest }}"
+    mode=0755
+
+- name: FUEL | Check for composer.json in project root or project_subtree_path
+  stat:
+    path: "{{ ansistrano_release_path.stdout }}/composer.json"
+  register: composer_json
+  when: fuel_setup_project == 1
+
+- name: FUEL | Fail if composer.json not found
+  fail:
+    msg: "Unable to find a `composer.json` file in the root of '{{ ansistrano_release_path.stdout }}'. Make sure your repo has a `composer.json` file in its root or edit `subtree_path` for '{{ site }}' in `wordpress_sites.yml` so it points to the directory with a `composer.json` file."
+  when: fuel_setup_project == 1 and not composer_json.stat.exists
+
+- name: FUEL | Install Composer dependencies
+  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+  when: fuel_setup_project == 1

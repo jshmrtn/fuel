@@ -1,0 +1,11 @@
+---
+
+- name: FUEL | Push local uploads to remote
+  sudo: no
+  user: "{{ fuel_deployment_user }}"
+  hosts: web
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
+  tasks:
+    - include: tasks/uploads-push.yml

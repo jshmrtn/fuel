@@ -1,0 +1,21 @@
+---
+
+- name: FUEL | Pull remote database to local
+  sudo: no
+  user: "{{ fuel_deployment_user }}"
+  hosts: web
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
+  tasks:
+    - include: tasks/db-pull-remote.yml
+
+- name: FUEL | Put local database into Vagrant
+  hosts: vagrant
+  remote_user: vagrant
+  sudo: no
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
+  tasks:
+    - include: tasks/db-pull-local.yml

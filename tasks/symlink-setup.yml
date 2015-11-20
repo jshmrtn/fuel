@@ -1,0 +1,11 @@
+---
+
+# Ensure symlinks source exists befor deleting target
+- name: FUEL | Ensure symlinks source files exist before deleting target
+  file: state=touch path={{ ansistrano_shared_path.stdout }}/{{ item }}
+  with_items: fuel_shared_files
+
+# Ensure symlinks source exists befor deleting target
+- name: FUEL | Ensure symlinks source dirs exist before deleting target
+  file: state=directory path={{ ansistrano_shared_path.stdout }}/{{ item }}
+  with_items: fuel_shared_dirs

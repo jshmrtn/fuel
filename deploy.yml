@@ -1,0 +1,28 @@
+---
+
+- name: FUEL | Deploy application
+  sudo: no
+  user: "{{ fuel_deployment_user }}"
+  hosts: web
+  vars:
+    ansistrano_deploy_from: './../../'
+    ansistrano_keep_releases: 5
+    ansistrano_deploy_via: 'git'
+    ansistrano_allow_anonymous_stats: no
+    ansistrano_before_symlink_shared_tasks_file: "{{ playbook_dir }}/tasks/symlink-setup.yml"
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
+  roles:
+    - carlosbuenosvinos.ansistrano-deploy
+
+- name: FUEL | Install application
+  sudo: no
+  user: "{{ fuel_deployment_user }}"
+  hosts: web
+  vars:
+    rokket_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
+    rokket_composer_dest: "{{ ansistrano_shared_path.stdout }}"
+  roles:
+    - wp-cli
+    - composer
