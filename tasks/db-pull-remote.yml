@@ -5,4 +5,4 @@
   command: "{{ansistrano_deploy_to}}/shared/wp-cli.phar db export /tmp/wpcli_database.sql chdir={{fuel_remote_project_root}}"
 
 - name: FUEL | Sync exported database to local machine
-  local_action: synchronize src=/tmp/wpcli_database.sql dest=/tmp/wpcli_database.sql
+  synchronize: mode=pull src=/tmp/wpcli_database.sql dest=/tmp/wpcli_database.sql
