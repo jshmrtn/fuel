@@ -3,8 +3,8 @@
 THIS PROJECT IS IN ALPHA STAGE.
 
 ## Roadmap
-* Integration of uploads syncing between remote and local.
-* Integration of theme build processes in deployment.
+* Better documentation
+* Refactoring functionality into ansible-galaxy role
 
 ## Requirements
 
