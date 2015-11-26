@@ -1,3 +1,4 @@
 ---
 
 fuel_local_url: your-local-url.dev
+fuel_local_site_path: /path/to/your/local/project/site

@@ -1,0 +1,27 @@
+---
+
+- name: FUEL | Run npm install
+  command: npm install
+  connection: local
+  args:
+    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+
+- name: FUEL | Run bower install
+  command: bower install
+  connection: local
+  args:
+    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+
+- name: FUEL | Run gulp
+  command: gulp --production
+  connection: local
+  args:
+    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+
+- name: FUEL | Copy project local files
+  synchronize:
+    src: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/dist"
+    dest: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
+    group: no
+    owner: no
+    rsync_opts: --chmod=Du=rwx,--chmod=Dg=rx,--chmod=Do=rx,--chmod=Fu=rw,--chmod=Fg=r,--chmod=Fo=r

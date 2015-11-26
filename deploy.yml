@@ -26,3 +26,5 @@
   roles:
     - wp-cli
     - composer
+  tasks:
+    - include: tasks/build-before.yml
