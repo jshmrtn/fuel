@@ -1,5 +1,10 @@
-# Deployment
-config/deploy/vars/deployment_vars_local.yml
+# Config
+hosts/staging
+hosts/production
+group_vars/staging.yml
+group_vars/production.yml
+vars/deployment_vars.yml
+vars/deployment_vars_local.yml
 
 # Vagrant
 bin
