@@ -5,7 +5,7 @@
   synchronize: src=/tmp/wpcli_database.sql dest=/tmp/wpcli_database.sql
 
 - name: FUEL | Import database to remote
-  command: "{{ ansistrano_shared_path.stdout }}/wp-cli.phar db import /tmp/wpcli_database.sql --debug chdir={{fuel_remote_project_root}}"
+  command: "{{ fuel_remote_shared_path }}/wp-cli.phar db import /tmp/wpcli_database.sql --debug chdir={{ fuel_remote_project_root }}"
 
 - name: FUEL | Replace old domain with new
-  command: "{{ ansistrano_shared_path.stdout }}/wp-cli.phar search-replace {{fuel_local_url}} {{fuel_remote_url}} --skip-columns=guid --url={{fuel_local_url}} --debug chdir={{fuel_remote_project_root}}"
+  command: "{{ fuel_remote_shared_path }}/wp-cli.phar search-replace {{ fuel_local_url }} {{ fuel_remote_url }} --skip-columns=guid --url={{ fuel_local_url }} --debug chdir={{ fuel_remote_project_root }}"

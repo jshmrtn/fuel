@@ -23,6 +23,9 @@
   vars:
     rokket_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
     rokket_composer_dest: "{{ ansistrano_shared_path.stdout }}"
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
   roles:
     - wp-cli
     - composer

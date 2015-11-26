@@ -2,7 +2,7 @@
 
 # Ensure symlinks source exists befor deleting target
 - name: FUEL | Export remote wordpress database
-  command: "{{ ansistrano_shared_path.stdout }}/wp-cli.phar db export /tmp/wpcli_database.sql chdir={{fuel_remote_project_root}}"
+  command: "{{ fuel_remote_shared_path }}/wp-cli.phar db export /tmp/wpcli_database.sql chdir={{ fuel_remote_project_root }}"
 
 - name: FUEL | Sync exported database to local machine
   synchronize: mode=pull src=/tmp/wpcli_database.sql dest=/tmp/wpcli_database.sql

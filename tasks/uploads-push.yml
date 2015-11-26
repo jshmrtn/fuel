@@ -1,1 +1,4 @@
 ---
+
+- name: FUEL | Copy Uploads from local machine to remote host
+  synchronize: mode=pull dest={{ fuel_local_site_path }}/web/app/uploads src={{ fuel_remote_shared_path }}/web/app/uploads

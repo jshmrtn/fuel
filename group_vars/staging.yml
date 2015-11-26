@@ -4,7 +4,3 @@ ansistrano_deploy_to: "/var/www/staging.example.com" # Base path to deploy to.
 
 fuel_deployment_user: root
 fuel_remote_url: staging.example.com
-fuel_remote_project_root: "{{ansistrano_deploy_to}}/current"
-fuel_composer_dest: "{{ansistrano_deploy_to}}/shared"
-fuel_wpcli_dest: "{{ansistrano_deploy_to}}/shared"
-
