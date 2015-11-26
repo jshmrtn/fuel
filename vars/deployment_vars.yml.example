@@ -7,6 +7,7 @@ fuel_pubkey_urls:
 fuel_shared_files: ['.env']
 fuel_shared_dirs: ['web/app/uploads', 'web/app/cache']
 
+fuel_build_theme: false
 fuel_theme_name: 'sage'
 
 ansistrano_git_repo: 'git@git.example.com:xxx/xxx.git'

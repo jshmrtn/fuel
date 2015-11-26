@@ -28,3 +28,4 @@
     - composer
   tasks:
     - include: tasks/build-before.yml
+      when: fuel_build_theme
