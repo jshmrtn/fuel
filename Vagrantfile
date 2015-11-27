@@ -4,9 +4,17 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+require 'yaml'
+
+ANSIBLE_PATH = __dir__ # absolute path to Ansible directory
+
+config_file = File.join(ANSIBLE_PATH, 'vars', 'deployment_vars_local.yml')
+deployment_vars_local = YAML.load_file(config_file)
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network :private_network, ip: "192.168.50.50"
+  config.vm.hostname = deployment_vars_local['fuel_local_url']
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
     ansible.playbook = "setup.yml"
