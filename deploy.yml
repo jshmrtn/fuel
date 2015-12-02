@@ -21,8 +21,8 @@
   user: "{{ fuel_deployment_user }}"
   hosts: web
   vars:
-    rokket_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
-    rokket_composer_dest: "{{ ansistrano_shared_path.stdout }}"
+    fuel_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
+    fuel_composer_dest: "{{ ansistrano_shared_path.stdout }}"
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
