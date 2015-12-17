@@ -5,18 +5,21 @@
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+  when: fuel_build_theme
 
 - name: FUEL | Run bower install
   command: bower install
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+  when: fuel_build_theme
 
 - name: FUEL | Run gulp
   command: gulp --production
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+  when: fuel_build_theme
 
 - name: FUEL | Copy project local files
   synchronize:
@@ -25,3 +28,4 @@
     group: no
     owner: no
     rsync_opts: --chmod=Du=rwx,--chmod=Dg=rx,--chmod=Do=rx,--chmod=Fu=rw,--chmod=Fg=r,--chmod=Fo=r
+  when: fuel_build_theme

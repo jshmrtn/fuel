@@ -9,26 +9,14 @@
     ansistrano_keep_releases: 5
     ansistrano_deploy_via: 'git'
     ansistrano_allow_anonymous_stats: no
+    fuel_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
+    fuel_composer_dest: "{{ ansistrano_shared_path.stdout }}"
+    ansistrano_after_update_code_tasks_file: "{{ playbook_dir }}/tasks/build.yml"
     ansistrano_before_symlink_shared_tasks_file: "{{ playbook_dir }}/tasks/symlink-setup.yml"
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
   roles:
     - carlosbuenosvinos.ansistrano-deploy
-
-- name: FUEL | Install application
-  sudo: no
-  user: "{{ fuel_deployment_user }}"
-  hosts: web
-  vars:
-    fuel_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
-    fuel_composer_dest: "{{ ansistrano_shared_path.stdout }}"
-  vars_files:
-    - vars/deployment_vars.yml
-    - vars/deployment_vars_local.yml
-  roles:
     - wp-cli
     - composer
-  tasks:
-    - include: tasks/build-before.yml
-      when: fuel_build_theme
