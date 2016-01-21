@@ -7,3 +7,6 @@ your.staging.server.example.com
 [staging:children]
 web
 vagrant
+
+[vagrant:vars]
+ansible_ssh_private_key_file=.vagrant/private_key

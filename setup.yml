@@ -117,11 +117,6 @@
     - name: FUEL | Ensure Apache is running
       service: name=apache2 state=restarted enabled=yes
 
-    - authorized_key: user=vagrant key="{{ item }}"
-      with_items:
-        - "{{ fuel_pubkey_urls }}"
-
-
 - hosts: vagrant
   remote_user: vagrant
   sudo: yes
