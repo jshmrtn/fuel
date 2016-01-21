@@ -1,9 +1,5 @@
 ---
 
-fuel_pubkey_urls:
-  - "https://github.com/yourusername.keys"
-  - "https://github.com/anotherusername.keys"
-
 fuel_shared_files: ['.env']
 fuel_shared_dirs: ['web/app/uploads', 'web/app/cache']
 

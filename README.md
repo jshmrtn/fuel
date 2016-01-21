@@ -5,6 +5,7 @@ THIS PROJECT IS IN BETA STAGE.
 This project is intended to use together with [jshmrtn/rokket](https://github.com/jshmrtn/rokket).
 
 ## Roadmap
+* Removing fixed IP for local vagrant machine
 * Better documentation
 * Refactoring functionality into ansible-galaxy role
 
@@ -30,10 +31,10 @@ This project is intended to use together with [jshmrtn/rokket](https://github.co
 8. Set your variables for the remote hosts in the group_vars files.
 
 ## Development
-Run `Vagrant up`
+Run `vagrant up`
 
 ### Deployments
-Run `./fuel.sh`
+Run `./fuel.sh` to see instructions.
 
 ## Contributing
 
