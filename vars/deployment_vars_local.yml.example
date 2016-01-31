@@ -3,3 +3,5 @@
 fuel_local_url: your-local-url.dev
 fuel_local_site_path: /path/to/your/local/project/site
 fuel_local_vagrant_provider: your_vm_provider # vmware_fusion / virtualbox / vmware_workstation / parallels
+
+fuel_slack_username: ''

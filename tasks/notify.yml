@@ -1,0 +1,16 @@
+---
+
+- name: FUEL | Send deployment notification to slack
+  local_action:
+    module: slack
+    token: "{{ fuel_slack_token }}"
+    msg: "{{ fuel_slack_username }} has run a deployment.\nDeployed to: {{ inventory_hostname }}\nSite-URL: {{ fuel_remote_url }}"
+    channel: "{{ fuel_slack_channel }}"
+    username: "Ansible | FUEL"
+    link_names: 1
+    parse: 'full'
+  when: not (fuel_slack_token is undefined or fuel_slack_token is none or fuel_slack_token | trim == '')
+        and
+        not (fuel_slack_username is undefined or fuel_slack_username is none or fuel_slack_username | trim == '')
+        and
+        not (fuel_slack_channel is undefined or fuel_slack_channel is none or fuel_slack_channel | trim == '')

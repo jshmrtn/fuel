@@ -13,6 +13,7 @@
     fuel_composer_dest: "{{ ansistrano_shared_path.stdout }}"
     ansistrano_after_update_code_tasks_file: "{{ playbook_dir }}/tasks/build.yml"
     ansistrano_before_symlink_shared_tasks_file: "{{ playbook_dir }}/tasks/symlink-setup.yml"
+    ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/tasks/notify.yml"
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
