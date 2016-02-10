@@ -43,6 +43,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Fix for slow external network connections
     vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
+
+    # Set VM name
+    vb.name = config.vm.hostname
   end
 
   # VMware Workstation settings
