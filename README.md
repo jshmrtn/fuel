@@ -19,6 +19,7 @@ This project is intended to use together with [jshmrtn/rokket](https://github.co
 1. Git clone this repo into a project root folder.
 2. Git clone your site framework (like [jshmrtn/rokket](https://github.com/jshmrtn/rokket)) in to a folder named "site" next to the fuel folder.
 3. Config the site framework to run properly.
+4. Run `ansible-galaxy install -r requirements.yml` inside your Fuel directory to install external Ansible roles/packages.
 
 ## Config
 1. Copy `vars/deployment_vars_local.yml.example` to `vars/deployment_vars_local.yml`.
