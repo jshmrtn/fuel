@@ -35,9 +35,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   memory = 1024
 
   # Virtualbox settings
-  config.vm.provider :virtualbox do |vb|
+  config.vm.provider :virtualbox do |vb, override|
     # Override provider box
-    override.vb.box = 'puppetlabs/ubuntu-14.04-64-nocm'
+    override.vm.box = 'puppetlabs/ubuntu-14.04-64-nocm'
 
     # Customize  VM settings
     vb.customize ['modifyvm', :id, '--memory', memory]
