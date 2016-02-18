@@ -7,7 +7,7 @@ vars/deployment_vars.yml
 vars/deployment_vars_local.yml
 
 # Ansible
-roles
+roles/*
 !roles/.gitkeep
 
 # Vagrant
