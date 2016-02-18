@@ -1,0 +1,11 @@
+---
+
+- name: FUEL | Call Cache-Clearing URL
+  uri:
+    url: "http://{{ fuel_remote_url }}/wp-json/jshmrtn/v1/clear_cache"
+    method: GET
+    return_content: yes
+    body_format: json
+    validate_certs: no
+  ignore_errors: yes
+  when: fuel_clear_cache

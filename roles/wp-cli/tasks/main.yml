@@ -1,7 +1,0 @@
----
-
-- name: FUEL | Install WP-CLI
-  get_url:
-    url="{{ fuel_wpcli_source_url }}"
-    dest="{{ fuel_wpcli_dest }}"
-    mode=0755

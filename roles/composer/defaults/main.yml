@@ -1,3 +1,0 @@
-fuel_composer_source_url: https://getcomposer.org/composer.phar
-fuel_composer_dest: /usr/bin/composer
-fuel_setup_project: 1

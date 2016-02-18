@@ -6,6 +6,8 @@ fuel_shared_dirs: ['web/app/uploads', 'web/app/cache']
 fuel_build_theme: false
 fuel_theme_name: 'sage'
 
+fuel_clear_cache: false
+
 fuel_slack_channel: ''
 fuel_slack_token: ''
 

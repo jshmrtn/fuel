@@ -9,15 +9,16 @@
     ansistrano_keep_releases: 5
     ansistrano_deploy_via: 'git'
     ansistrano_allow_anonymous_stats: no
-    fuel_wpcli_dest: "{{ ansistrano_shared_path.stdout }}"
-    fuel_composer_dest: "{{ ansistrano_shared_path.stdout }}"
+    fuel_setup_project: true
+    fuel_wpcli_source_url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    fuel_composer_source_url: https://getcomposer.org/composer.phar
+    ansistrano_after_setup_tasks_file: "{{ playbook_dir }}/tasks/setup.yml"
     ansistrano_after_update_code_tasks_file: "{{ playbook_dir }}/tasks/build.yml"
     ansistrano_before_symlink_shared_tasks_file: "{{ playbook_dir }}/tasks/symlink-setup.yml"
+    ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/tasks/cache.yml"
     ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/tasks/notify.yml"
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
   roles:
     - carlosbuenosvinos.ansistrano-deploy
-    - wp-cli
-    - composer

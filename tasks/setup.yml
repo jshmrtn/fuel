@@ -1,0 +1,13 @@
+---
+
+- name: FUEL | Install Composer
+  get_url:
+    url="{{ fuel_composer_source_url }}"
+    dest="{{ ansistrano_shared_path.stdout }}"
+    mode=0755
+
+- name: FUEL | Install WP-CLI
+  get_url:
+    url="{{ fuel_wpcli_source_url }}"
+    dest="{{ ansistrano_shared_path.stdout }}"
+    mode=0755
