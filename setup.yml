@@ -2,7 +2,7 @@
 
 - hosts: vagrant
   remote_user: vagrant
-  sudo: yes
+  become: true
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
