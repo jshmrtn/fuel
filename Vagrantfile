@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Give VM more memory
-  memory = 1024
+  memory = 2048
 
   # Virtualbox settings
   config.vm.provider :virtualbox do |vb, override|
