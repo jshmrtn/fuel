@@ -4,7 +4,7 @@
   local_action:
     module: slack
     token: "{{ fuel_slack_token }}"
-    msg: "{{ fuel_slack_username }} has run a deployment.\nDeployed to: {{ inventory_hostname }}\nSite-URL: {{ fuel_remote_url }}"
+    msg: "{{ fuel_slack_username }} is starting a deployment. Please wait...\nDeploying to: {{ inventory_hostname }}\nSite-URL: {{ fuel_remote_url }}"
     channel: "{{ fuel_slack_channel }}"
     username: "Ansible | FUEL"
     link_names: 1
