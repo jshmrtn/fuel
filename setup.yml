@@ -1,5 +1,16 @@
 ---
 
+- hosts: 127.0.0.1
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
+  tasks:
+    - name: FUEL | Adding Symlink for private key
+      file:
+        src: "{{ playbook_dir }}/.vagrant/machines/default/{{ fuel_local_vagrant_provider }}/private_key"
+        dest: "{{ playbook_dir }}/.vagrant/private_key"
+        state: link
+
 - hosts: vagrant
   remote_user: vagrant
   become: true

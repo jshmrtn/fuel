@@ -83,12 +83,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder "./../site", "/vagrant", owner:"www-data", group:"www-data", mount_options:["dmode=775", "fmode=775"]
 
-  if File.exist?('.vagrant/machines/default/' + deployment_vars_local['fuel_local_vagrant_provider'] + '/private_key')
-    if !File.exist?('.vagrant/private_key')
-      print "Generating symlink for private key..."
-      File.symlink(File.expand_path('.vagrant/machines/default/' + deployment_vars_local['fuel_local_vagrant_provider'] + '/private_key'), '.vagrant/private_key')
-      print "Going on..."
-    end
-  end
-
 end
