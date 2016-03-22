@@ -5,9 +5,11 @@
   user: "{{ fuel_deployment_user }}"
   hosts: web
   vars:
-    ansistrano_deploy_from: './../../'
+    ansistrano_deploy_from: '{{ playbook_dir }}'
     ansistrano_keep_releases: 5
     ansistrano_deploy_via: 'git'
+    ansistrano_version_dir: 'releases'
+    ansistrano_current_dir: 'current'
     ansistrano_allow_anonymous_stats: no
     fuel_setup_project: true
     fuel_wpcli_source_url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
