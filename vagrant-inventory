@@ -2,5 +2,6 @@
 192.168.50.50
 
 [vagrant:vars]
+ansible_ssh_private_key_file=.vagrant/private_key
 vhostTemplatePath=templates/vhost.conf
 mysqlTemplatePath=templates/mysql
