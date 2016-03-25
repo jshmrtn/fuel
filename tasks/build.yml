@@ -17,28 +17,34 @@
     chdir: "{{ ansistrano_release_path.stdout }}"
   when: fuel_setup_project
 
-- name: FUEL | Run npm install
+- name: FUEL | Install composer dependencies for theme
+  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
+  when: fuel_build_theme
+
+- name: FUEL | Run npm install for theme
   command: npm install
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
   when: fuel_build_theme
 
-- name: FUEL | Run bower install
+- name: FUEL | Run bower install for theme
   command: bower install
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
   when: fuel_build_theme
 
-- name: FUEL | Run gulp
+- name: FUEL | Run gulp for theme
   command: gulp --production
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
   when: fuel_build_theme
 
-- name: FUEL | Copy project local files
+- name: FUEL | Copy project local files for theme
   synchronize:
     src: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/dist"
     dest: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
