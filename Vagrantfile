@@ -14,6 +14,11 @@ deployment_vars_local = YAML.load_file(config_file)
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network :private_network, ip: "192.168.50.50"
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
   config.vm.hostname = deployment_vars_local['fuel_local_url']
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
