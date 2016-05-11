@@ -1,11 +1,19 @@
 ---
 
-# Ensure symlinks source exists befor deleting target
-- name: FUEL | Ensure symlinks source files exist before deleting target
+# Ensure shared symlinks source exists befor deleting target
+- name: FUEL | Ensure shared symlinks source files exist before deleting target
   file: state=touch path={{ ansistrano_shared_path.stdout }}/{{ item }}
   with_items: fuel_shared_files
 
-# Ensure symlinks source exists befor deleting target
-- name: FUEL | Ensure symlinks source dirs exist before deleting target
+# Ensure shared symlinks source exists befor deleting target
+- name: FUEL | Ensure shared symlinks source dirs exist before deleting target
   file: state=directory path={{ ansistrano_shared_path.stdout }}/{{ item }}
   with_items: fuel_shared_dirs
+
+# Ensure "current" is either symlink or nonexistent before symlinking
+- stat: path={{ ansistrano_deploy_to }}/current
+  register: current_folder
+
+- name: FUEL | Ensure "current" is either symlink or nonexistent before symlinking
+  file: state=absent path={{ ansistrano_deploy_to }}/current
+  when: current_folder.stat.islnk is defined and current_folder.stat.islnk == False
