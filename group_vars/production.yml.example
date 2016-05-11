@@ -4,3 +4,6 @@ ansistrano_deploy_to: "/var/www/example.com" # Base path to deploy to.
 
 fuel_deployment_user: root
 fuel_remote_url: example.com
+
+fuel_basicauth_user: ''
+fuel_basicauth_password: ''
