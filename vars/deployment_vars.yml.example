@@ -1,7 +1,7 @@
 ---
 
 fuel_shared_files: ['.env']
-fuel_shared_dirs: ['web/app/uploads', 'web/app/cache']
+fuel_shared_dirs: ['web/.well-known', 'web/app/uploads', 'web/app/cache']
 
 fuel_build_theme: false
 fuel_theme_name: 'sage'
@@ -13,4 +13,4 @@ fuel_slack_token: ''
 
 ansistrano_git_repo: 'git@git.example.com:xxx/xxx.git'
 ansistrano_git_branch: 'master'
-ansistrano_shared_paths: ['web/app/uploads', 'web/app/cache', '.env']
+ansistrano_shared_paths: ['web/.well-known', 'web/app/uploads', 'web/app/cache', '.env']
