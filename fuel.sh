@@ -1,6 +1,7 @@
 #!/bin/bash
 shopt -s nullglob
 
+GLOBIGNORE="*.example"
 ENVIRONMENTS=( hosts/* )
 ENVIRONMENTS=( "${ENVIRONMENTS[@]##*/}" )
 NUM_ARGS=1
