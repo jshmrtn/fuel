@@ -23,32 +23,43 @@
   register: theme_composer_json
   when: fuel_build_theme
 
+- name: FUEL | Check if local theme deployment exists
+  connection: local
+  stat:
+    path: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/deployment.yml"
+  register: theme_local_deployment
+  when: fuel_build_theme
+
 - name: FUEL | Install composer dependencies for theme
   command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader"
   args:
     chdir: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
-  when: fuel_build_theme and theme_composer_json.stat.exists
+  when: fuel_build_theme and theme_composer_json.stat.exists and not theme_local_deployment.stat.exists
 
 - name: FUEL | Run npm install for theme
   command: npm install
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
-  when: fuel_build_theme
+  when: fuel_build_theme and not theme_local_deployment.stat.exists
 
 - name: FUEL | Run bower install for theme
   command: bower install
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
-  when: fuel_build_theme
+  when: fuel_build_theme and not theme_local_deployment.stat.exists
 
 - name: FUEL | Run gulp for theme
   command: gulp --production
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
-  when: fuel_build_theme
+  when: fuel_build_theme and not theme_local_deployment.stat.exists
+
+- name: FUEL | Run local theme deployment
+  include: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/deployment.yml"
+  when: fuel_build_theme and theme_local_deployment.stat.exists
 
 - name: FUEL | Copy project local files for theme
   synchronize:
