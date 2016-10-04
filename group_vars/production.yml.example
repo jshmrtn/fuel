@@ -1,6 +1,7 @@
 ---
 
-ansistrano_deploy_to: "/var/www/example.com" # Base path to deploy to.
+ansistrano_deploy_to: '/var/www/example.com' # Base path to deploy to.
+ansistrano_git_branch: 'master' # Git branch to deploy from
 
 fuel_deployment_user: root
 fuel_remote_url: example.com
