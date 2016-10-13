@@ -10,10 +10,11 @@ show_usage() {
   echo "
     Usage:
       ./fuel.sh deploy <environment>
+      ./fuel.sh rollback <environment>
       ./fuel.sh db <environment> <action>
       ./fuel.sh uploads <environment> <action>
 
-      <environment> is the environment to deploy to ("staging", "production", etc)
+      <environment> is the environment to deploy/rollback/sync to ("staging", "production", etc)
       <action> is the database action ("push", "pull")
 
     Available environments:
@@ -21,6 +22,7 @@ show_usage() {
 
     Examples:
       ./fuel.sh deploy staging
+      ./fuel.sh rollback production
       ./fuel.sh uploads staing push
       ./fuel.sh uploads production pull
       ./fuel.sh db staging push
@@ -28,7 +30,7 @@ show_usage() {
     "
 }
 
-[[ $# -ne $NUM_ARGS && $1 != deploy && $1 != db && $1 != uploads ]] && { show_usage; exit 0; }
+[[ $# -ne $NUM_ARGS && $1 != deploy && $1 != rollback && $1 != db && $1 != uploads ]] && { show_usage; exit 0; }
 
 if [[ $1 = deploy ]]; then
 
@@ -50,6 +52,45 @@ if [[ $1 = deploy ]]; then
       Examples:
         ./fuel.sh deploy staging
         ./fuel.sh deploy production
+      "
+  }
+
+  HOSTS_FILE="hosts/$2"
+
+  [[ $# -ne $NUM_ARGS || $2 = -h ]] && { show_usage; exit 0; }
+
+  if [[ ! -e $HOSTS_FILE ]]; then
+    echo "Error: $2 is not a valid environment ($HOSTS_FILE does not exist)."
+    echo
+    echo "Available environments:"
+    ( IFS=$'\n'; echo "${ENVIRONMENTS[*]}" )
+    exit 0
+  fi
+
+  $DEPLOY_CMD
+
+fi
+
+if [[ $1 = rollback ]]; then
+
+  DEPLOY_CMD="ansible-playbook -i hosts/$2 rollback.yml"
+  ENVIRONMENTS=( hosts/* )
+  ENVIRONMENTS=( "${ENVIRONMENTS[@]##*/}" )
+  NUM_ARGS=2
+
+  show_usage() {
+    echo "
+      Usage:
+        ./fuel.sh rollback <environment>
+
+        <environment> is the environment to roll back ("staging", "production", etc)
+
+      Available environments:
+        `( IFS=$' '; echo "${ENVIRONMENTS[*]}" )`
+
+      Examples:
+        ./fuel.sh rollback staging
+        ./fuel.sh rollback production
       "
   }
 

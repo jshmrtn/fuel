@@ -1,0 +1,19 @@
+---
+
+- name: FUEL | Roll back application
+  sudo: no
+  user: "{{ fuel_deployment_user }}"
+  hosts: web
+  vars:
+    ansistrano_version_dir: 'releases'
+    ansistrano_current_dir: 'current'
+    ansistrano_remove_rolled_back: yes
+    ansistrano_allow_anonymous_stats: no
+    ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/tasks/notify-before-setup.yml"
+    ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/tasks/cache.yml"
+    ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/tasks/notify-after-cleanup.yml"
+  vars_files:
+    - vars/deployment_vars.yml
+    - vars/deployment_vars_local.yml
+  roles:
+    - carlosbuenosvinos.ansistrano-rollback
