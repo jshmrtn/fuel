@@ -1,8 +1,15 @@
 ---
 
 # Ensure symlinks source exists befor deleting target
-- name: FUEL | Export local wordpress database
+- name: FUEL | Export local wordpress database from Vagrant
   command: wp db export /tmp/wpcli_database.sql chdir=/vagrant
+  when: fuel_use_vm|default(true)|bool
+
+- name: FUEL | Export local wordpress database from localhost
+  command: wp db export /tmp/wpcli_database.sql chdir={{ fuel_local_site_path }}
+  connection: local
+  when: not fuel_use_vm|default(true)|bool
 
 - name: FUEL | Sync exported database to host machine
   synchronize: mode=pull src=/tmp/wpcli_database.sql dest=/tmp/wpcli_database.sql
+  when: fuel_use_vm|default(true)|bool

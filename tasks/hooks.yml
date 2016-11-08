@@ -1,0 +1,47 @@
+---
+
+- name: FUEL | Call Cache-Clearing URL (without authentication)
+  uri:
+    url: "http://{{ fuel_remote_url }}/wp-json/jshmrtn/v1/clear_cache"
+    method: GET
+    return_content: yes
+    body_format: json
+    validate_certs: no
+  ignore_errors: yes
+  when: fuel_clear_cache|default(false)|bool and (fuel_basicauth_user is undefined or fuel_basicauth_user is none or fuel_basicauth_user | trim == '') and (fuel_basicauth_password is undefined or fuel_basicauth_password is none or fuel_basicauth_password | trim == '')
+
+- name: FUEL | Call Cache-Clearing URL (with authentication)
+  uri:
+    url: "http://{{ fuel_remote_url }}/wp-json/jshmrtn/v1/clear_cache"
+    method: GET
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    user: "{{ fuel_basicauth_user }}"
+    password: "{{ fuel_basicauth_password }}"
+    force_basic_auth: yes
+  ignore_errors: yes
+  when: fuel_clear_cache|default(false)|bool and not (fuel_basicauth_user is undefined or fuel_basicauth_user is none or fuel_basicauth_user | trim == '') and not (fuel_basicauth_password is undefined or fuel_basicauth_password is none or fuel_basicauth_password | trim == '')
+
+- name: FUEL | Call ACF Sync URL (without authentication)
+  uri:
+    url: "http://{{ fuel_remote_url }}/wp-json/jshmrtn/v1/sync_json"
+    method: GET
+    return_content: yes
+    body_format: json
+    validate_certs: no
+  ignore_errors: yes
+  when: fuel_sync_acf|default(false)|bool and (fuel_basicauth_user is undefined or fuel_basicauth_user is none or fuel_basicauth_user | trim == '') and (fuel_basicauth_password is undefined or fuel_basicauth_password is none or fuel_basicauth_password | trim == '')
+
+- name: FUEL | Call ACF Sync URL (with authentication)
+  uri:
+    url: "http://{{ fuel_remote_url }}/wp-json/jshmrtn/v1/sync_json"
+    method: GET
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    user: "{{ fuel_basicauth_user }}"
+    password: "{{ fuel_basicauth_password }}"
+    force_basic_auth: yes
+  ignore_errors: yes
+  when: fuel_sync_acf|default(false)|bool and not (fuel_basicauth_user is undefined or fuel_basicauth_user is none or fuel_basicauth_user | trim == '') and not (fuel_basicauth_password is undefined or fuel_basicauth_password is none or fuel_basicauth_password | trim == '')

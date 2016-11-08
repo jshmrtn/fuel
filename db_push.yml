@@ -1,9 +1,10 @@
 ---
 
-- name: FUEL | Get local database out of Vagrant
-  hosts: vagrant
-  remote_user: vagrant
+- name: FUEL | Get local database out of Vagrant / localhost
   sudo: no
+  hosts: vagrant
+  gather_facts: no
+  remote_user: vagrant
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
@@ -12,8 +13,8 @@
 
 - name: FUEL | Push local database to remote
   sudo: no
-  user: "{{ fuel_deployment_user }}"
   hosts: web
+  user: "{{ fuel_deployment_user }}"
   vars_files:
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
