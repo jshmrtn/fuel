@@ -13,4 +13,5 @@ fuel_slack_channel: ''
 fuel_slack_token: ''
 
 ansistrano_git_repo: 'git@git.example.com:xxx/xxx.git'
-ansistrano_shared_paths: ['web/.well-known', 'web/app/uploads', 'web/app/cache', '.env']
+ansistrano_shared_files: ['.env']
+ansistrano_shared_paths: ['web/.well-known', 'web/app/uploads', 'web/app/cache']
