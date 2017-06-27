@@ -16,8 +16,14 @@
     msg: "A personal fuel_packagist_token must be set in your `deployment_vars_local.yml` file. Make sure to add single quotes around the token."
   when: fuel_packagist_token is undefined or fuel_packagist_token is none or fuel_packagist_token | trim == ''
 
+- name: FUEL | Fail if fuel_packagist_username is not set
+  fail:
+    msg: "A personal fuel_packagist_username must be set in your `deployment_vars_local.yml` file. Make sure to add single quotes around the token."
+  when: fuel_packagist_username is undefined or fuel_packagist_username is none or fuel_packagist_username | trim == ''
+
+
 - name: FUEL | Install Composer dependencies
-  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --auth http-basic.repo.packagist.com token {{fuel_packagist_token}}"
+  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --auth http-basic.repo.packagist.com {{fuel_packagist_username}} {{fuel_packagist_token}}"
   args:
     chdir: "{{ ansistrano_release_path.stdout }}"
   when: fuel_setup_project
@@ -36,7 +42,7 @@
   when: fuel_build_theme
 
 - name: FUEL | Install composer dependencies for theme
-  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --auth http-basic.repo.packagist.com token {{fuel_packagist_token}}"
+  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --auth http-basic.repo.packagist.com {{fuel_packagist_username}} {{fuel_packagist_token}}"
   args:
     chdir: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
   when: fuel_build_theme and theme_composer_json.stat.exists and not theme_local_deployment.stat.exists

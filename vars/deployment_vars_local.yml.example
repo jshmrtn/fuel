@@ -8,4 +8,5 @@ fuel_slack_username: ''
 
 fuel_use_vm: true
 
+fuel_packagist_username: ''
 fuel_packagist_token: ''
