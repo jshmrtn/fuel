@@ -7,3 +7,5 @@ fuel_local_vagrant_provider: your_vm_provider # vmware_fusion / virtualbox / vmw
 fuel_slack_username: ''
 
 fuel_use_vm: true
+
+fuel_packagist_token: ''
