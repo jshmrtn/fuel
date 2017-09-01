@@ -25,7 +25,7 @@
 
 - name: FUEL | Replace vars on Vagrant
   command: wp search-replace {{ item.1.old }} {{ item.1.new }} --skip-columns=guid --url={{ item.0.site }} --debug chdir={{ fuel_local_site_path }} --network
-  when: not fuel_use_vm|default(true)|bool and fuel_replace is defined
+  when: fuel_use_vm|default(true)|bool and fuel_replace is defined
   with_subelements:
     - "{{ fuel_replace }}"
     - replace
