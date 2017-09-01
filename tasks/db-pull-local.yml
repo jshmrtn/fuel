@@ -15,10 +15,25 @@
   when: not fuel_use_vm|default(true)|bool
 
 - name: FUEL | Replace old domain with new on Vagrant
-  command: wp search-replace {{fuel_remote_url}} {{fuel_local_url}} --skip-columns=guid --url={{fuel_remote_url}} --debug chdir=/vagrant
-  when: fuel_use_vm|default(true)|bool
+  command: wp search-replace {{fuel_remote_url}} {{fuel_local_url}} --skip-columns=guid --url={{fuel_remote_url}} --debug chdir=/vagrant --network
+  when: fuel_use_vm|default(true)|bool and not fuel_replace is defined
 
 - name: FUEL | Replace old domain with new on localhost
-  command: wp search-replace {{fuel_remote_url}} {{fuel_local_url}} --skip-columns=guid --url={{fuel_remote_url}} --debug chdir={{ fuel_local_site_path }}
+  command: wp search-replace {{fuel_remote_url}} {{fuel_local_url}} --skip-columns=guid --url={{fuel_remote_url}} --debug chdir={{ fuel_local_site_path }} --network
   connection: local
-  when: not fuel_use_vm|default(true)|bool
+  when: not fuel_use_vm|default(true)|bool and not fuel_replace is defined
+
+- name: FUEL | Replace vars on Vagrant
+  command: wp search-replace {{ item.1.old }} {{ item.1.new }} --skip-columns=guid --url={{ item.0.site }} --debug chdir={{ fuel_local_site_path }} --network
+  when: not fuel_use_vm|default(true)|bool and fuel_replace is defined
+  with_subelements:
+    - "{{ fuel_replace }}"
+    - replace
+
+- name: FUEL | Replace vars on localhost
+  command: wp search-replace {{ item.1.old }} {{ item.1.new }} --skip-columns=guid --url={{ item.0.site_local }} --debug chdir={{ fuel_local_site_path }} --network
+  connection: local
+  when: not fuel_use_vm|default(true)|bool and fuel_replace is defined
+  with_subelements:
+    - "{{ fuel_replace }}"
+    - replace
