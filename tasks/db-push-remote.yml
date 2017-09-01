@@ -8,4 +8,12 @@
   command: "{{ fuel_remote_shared_path }}/wp-cli.phar db import /tmp/wpcli_database.sql --debug chdir={{ fuel_remote_project_root }}"
 
 - name: FUEL | Replace old domain with new
-  command: "{{ fuel_remote_shared_path }}/wp-cli.phar search-replace {{ fuel_local_url }} {{ fuel_remote_url }} --skip-columns=guid --url={{ fuel_local_url }} --debug chdir={{ fuel_remote_project_root }}"
+  command: "{{ fuel_remote_shared_path }}/wp-cli.phar search-replace {{ fuel_local_url }} {{ fuel_remote_url }} --skip-columns=guid --url={{ fuel_local_url }} --debug chdir={{ fuel_remote_project_root }} --network"
+  when: not fuel_replace is defined
+
+- name: FUEL | Replace vars
+  command: "{{ fuel_remote_shared_path }}/wp-cli.phar search-replace {{ item.1.new }} {{ item.1.old }} --skip-columns=guid --url={{ item.0.site_remote }} --debug chdir={{ fuel_remote_project_root }} --network"
+  when: fuel_replace is defined
+  with_subelements:
+    - "{{ fuel_replace }}"
+    - replace
