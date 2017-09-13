@@ -15,3 +15,16 @@ fuel_slack_token: ''
 ansistrano_git_repo: 'git@git.example.com:xxx/xxx.git'
 ansistrano_shared_files: ['.env']
 ansistrano_shared_paths: ['web/.well-known', 'web/app/uploads', 'web/app/cache']
+
+# Things to replace (If you use this, the default site replace will not run!)
+# fuel_replace:
+#     # The Site when importing from remote
+#   - site_local: "{{ fuel_remote_url }}/wp"
+#     # The site when exporting from local
+#     site_remote: "{{ fuel_local_url }}/wp"
+#     # Replacements
+#     replace:
+#         # The Old String (New String on remote)
+#       - old: "{{ fuel_remote_url }}"
+#         # The New String (Old String on remote)
+#         new: "{{ fuel_local_url }}"

@@ -11,19 +11,10 @@
     msg: "Unable to find a `composer.json` file in the root of '{{ ansistrano_release_path.stdout }}'. Make sure your repo has a `composer.json` file in its root or edit `subtree_path` for '{{ site }}' in `wordpress_sites.yml` so it points to the directory with a `composer.json` file."
   when: fuel_setup_project and not composer_json.stat.exists
 
-- name: FUEL | Fail if fuel_packagist_token is not set
-  fail:
-    msg: "A personal fuel_packagist_token must be set in your `deployment_vars_local.yml` file. Make sure to add single quotes around the token."
-  when: fuel_packagist_token is undefined or fuel_packagist_token is none or fuel_packagist_token | trim == ''
-
-- name: FUEL | Fail if fuel_packagist_username is not set
-  fail:
-    msg: "A personal fuel_packagist_username must be set in your `deployment_vars_local.yml` file. Make sure to add single quotes around the token."
-  when: fuel_packagist_username is undefined or fuel_packagist_username is none or fuel_packagist_username | trim == ''
-
-
 - name: FUEL | Install Composer dependencies
-  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --auth http-basic.repo.packagist.com {{fuel_packagist_username}} {{fuel_packagist_token}}"
+  command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader"
+  environment:
+    COMPOSER_AUTH: "{{ {'http-basic': {'repo.packagist.com': {'username': fuel_packagist_username, 'password': fuel_packagist_token}}} | to_json }}"
   args:
     chdir: "{{ ansistrano_release_path.stdout }}"
   when: fuel_setup_project
