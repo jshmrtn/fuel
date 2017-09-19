@@ -1,5 +1,6 @@
 ---
 
+ansistrano_deploy_via: 'git'
 fuel_remote_project_root: "{{ansistrano_deploy_to}}/current"
 fuel_remote_shared_path: "{{ansistrano_deploy_to}}/shared"
 fuel_composer_dest: "{{fuel_remote_shared_path}}"
