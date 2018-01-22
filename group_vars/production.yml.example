@@ -8,3 +8,8 @@ fuel_remote_url: example.com
 
 fuel_basicauth_user: ''
 fuel_basicauth_password: ''
+
+fuel_cache_busting_urls: [
+  'https://example.ch',
+  'https://two.example.ch',
+]
