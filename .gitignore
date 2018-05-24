@@ -1,10 +1,11 @@
 # Config
-hosts/staging
-hosts/production
-hosts/development
-group_vars/staging.yml
-group_vars/production.yml
-group_vars/development.yml
+hosts/**
+!hosts/staging.example
+!hosts/production.example
+group_vars/**
+!group_vars/staging.yml.example
+!group_vars/production.yml.example
+
 vars/deployment_vars.yml
 vars/deployment_vars_local.yml
 
