@@ -24,4 +24,4 @@
     - vars/deployment_vars.yml
     - vars/deployment_vars_local.yml
   roles:
-    - carlosbuenosvinos.ansistrano-deploy
+    - ansistrano.deploy
