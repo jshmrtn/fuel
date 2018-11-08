@@ -5,7 +5,7 @@
   user: "{{ fuel_deployment_user }}"
   hosts: web
   environment:
-    TMPDIR: "{{ lookup('env','DEPLOYMENT_TMP_DIR') | default('/tmp') }} "
+    TMPDIR: "{{ fuel_deployment_tmp_dir | default('/tmp') }}"
   vars:
     ansistrano_deploy_from: '{{ playbook_dir }}'
     ansistrano_keep_releases: 5
