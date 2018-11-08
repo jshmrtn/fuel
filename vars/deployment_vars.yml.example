@@ -1,8 +1,5 @@
 ---
 
-fuel_shared_files: ['.env']
-fuel_shared_dirs: ['web/.well-known', 'web/app/uploads', 'web/app/cache']
-
 fuel_build_theme: false
 fuel_theme_name: 'sage'
 
