@@ -6,6 +6,8 @@
   hosts: web
   environment:
     TMPDIR: "{{ fuel_deployment_tmp_dir | default('/tmp') }}"
+    TMP: "{{ fuel_deployment_tmp_dir | default('/tmp') }}"
+    TEMP: "{{ fuel_deployment_tmp_dir | default('/tmp') }}"
   vars:
     ansistrano_deploy_from: '{{ playbook_dir }}'
     ansistrano_keep_releases: 5
