@@ -1,6 +1,6 @@
 ---
 
 - src: ansistrano.deploy
-  version: 1.11.0
+  version: 3.0.1
 - src: ansistrano.rollback
-  version: 1.5.0
+  version: 3.0.0
