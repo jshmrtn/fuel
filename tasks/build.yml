@@ -50,7 +50,7 @@
     - not theme_local_deployment.stat.exists
 
 - name: FUEL | Run bower install for theme
-  command: bower install
+  command: npx bower install
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
@@ -59,7 +59,7 @@
     - not theme_local_deployment.stat.exists
 
 - name: FUEL | Run gulp for theme
-  command: gulp --production
+  command: npx gulp --production
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
