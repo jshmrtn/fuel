@@ -50,7 +50,7 @@
     - not theme_local_deployment.stat.exists
 
 - name: FUEL | Run bower install for theme
-  command: npx bower install
+  command: npx bower install --allow-root
   connection: local
   args:
     chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
