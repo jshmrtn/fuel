@@ -1,4 +1,9 @@
 ---
+- name: Migrate old variable name
+  when:
+   - fuel_theme_name is defined
+  set_fact:
+    fuel_theme_names: ["{{ fuel_theme_name }}"]
 
 - name: FUEL | Check for composer.json in project root or project_subtree_path
   stat:
@@ -21,63 +26,81 @@
 
 - name: FUEL | Check for composer.json in theme folder
   stat:
-    path: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}/composer.json"
+    path: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ item.1 }}/composer.json"
   register: theme_composer_json
   when: fuel_build_theme
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Check if local theme deployment exists
   connection: local
   stat:
-    path: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/deployment.yml"
+    path: "{{ fuel_local_site_path }}/web/app/themes/{{ item.1 }}/deployment.yml"
   register: theme_local_deployment
   when: fuel_build_theme
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Install composer dependencies for theme
   command: "{{fuel_composer_dest}}/composer.phar install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --auth http-basic.repo.packagist.com {{fuel_packagist_username}} {{fuel_packagist_token}}"
   args:
-    chdir: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
+    chdir: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ item.1 }}"
   when:
     - fuel_build_theme
-    - theme_composer_json.stat.exists and not theme_local_deployment.stat.exists
+    - theme_composer_json.results[item.0].stat.exists and not theme_local_deployment.results[item.0].stat.exists
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Run npm install for theme
   command: npm install
   connection: local
   args:
-    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ item.1 }}"
   when:
     - fuel_build_theme
-    - not theme_local_deployment.stat.exists
+    - not theme_local_deployment.results[item.0].stat.exists
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Run bower install for theme
   command: npx bower install --allow-root
   connection: local
   args:
-    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ item.1 }}"
   when:
     - fuel_build_theme
-    - not theme_local_deployment.stat.exists
+    - not theme_local_deployment.results[item.0].stat.exists
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Run gulp for theme
   command: npx gulp --production
   connection: local
   args:
-    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}"
+    chdir: "{{ fuel_local_site_path }}/web/app/themes/{{ item.1 }}"
   when:
     - fuel_build_theme
-    - not theme_local_deployment.stat.exists
+    - not theme_local_deployment.results[item.0].stat.exists
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Run local theme deployment
-  include: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/deployment.yml"
+  include: "{{ fuel_local_site_path }}/web/app/themes/{{ item.1}}/deployment.yml"
+  vars:
+    fuel_theme_name: "{{ item.1 }}"
   when:
     - fuel_build_theme
-    - theme_local_deployment.stat.exists
+    - theme_local_deployment.results[item.0].stat.exists
+  with_indexed_items:
+    - "{{ fuel_theme_names }}"
 
 - name: FUEL | Copy project local files for theme
   synchronize:
-    src: "{{ fuel_local_site_path }}/web/app/themes/{{ fuel_theme_name }}/dist"
-    dest: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ fuel_theme_name }}"
+    src: "{{ fuel_local_site_path }}/web/app/themes/{{ item }}/dist"
+    dest: "{{ ansistrano_release_path.stdout }}/web/app/themes/{{ item }}"
     group: no
     owner: no
     rsync_opts: --chmod=Du=rwx,--chmod=Dg=rx,--chmod=Do=rx,--chmod=Fu=rw,--chmod=Fg=r,--chmod=Fo=r
   when: fuel_build_theme
+  with_items:
+    - "{{ fuel_theme_names }}"
