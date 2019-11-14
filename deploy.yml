@@ -1,7 +1,6 @@
 ---
 
 - name: FUEL | Deploy application
-  sudo: no
   user: "{{ fuel_deployment_user }}"
   hosts: web
   environment:

@@ -1,7 +1,6 @@
 ---
 
 - name: FUEL | Pull remote uploads to local
-  sudo: no
   user: "{{ fuel_deployment_user }}"
   hosts: web
   vars_files:
