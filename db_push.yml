@@ -2,7 +2,7 @@
 
 - name: FUEL | Get local database out of Vagrant / localhost
   hosts: vagrant
-  gather_info: no
+  gather_facts: no
   remote_user: vagrant
   vars_files:
     - vars/deployment_vars.yml

@@ -11,7 +11,7 @@
 
 - name: FUEL | Put local database into Vagrant / localhost
   hosts: vagrant
-  gather_info: no
+  gather_facts: no
   remote_user: vagrant
   vars_files:
     - vars/deployment_vars.yml
